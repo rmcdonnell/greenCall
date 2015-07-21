@@ -20,14 +20,14 @@ import json
 import codecs
 import logging
 
-QUERY_LIMIT = 5
+#QUERY_LIMIT = 20
 
 def check_num_cols(row):
     """ Ensure csv is of the format [unique_id, query] """
     if len(row) > 2:
         raise TypeError("Incorrect CSV format, read the docstring")
 
-def read_csv(filepath):
+def read_csv(filepath, QUERY_LIMIT):
 
     outputdict = {}
 
@@ -61,9 +61,9 @@ def read_csv(filepath):
     logging.info("csv converted to Python dictionary")
     return outputdict
 
-def tojson(filepath, outpath):
+def tojson(filepath, outpath, QUERY_LIMIT):
     """ Write query to JSON format """
-    outdict = read_csv(filepath)
+    outdict = read_csv(filepath, QUERY_LIMIT)
 
     with open(outpath, 'w') as outjson:
         json.dump(outdict, outjson)

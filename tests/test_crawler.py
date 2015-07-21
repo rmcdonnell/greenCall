@@ -23,18 +23,23 @@ class TestPagesWithDeferreds(unittest.TestCase):
                      'cnn': "http://www.cnn.com/",
                      'msnbc': "http://www.msnbc.com/"}
         self.fakes = {'test': "testingOneTwo"}
+        # Maximum number or requests deferred
+        self.MAX_RUN = 20
+
+        # This many seconds will expire between requests sent
+        self.RATE_LIMIT = 0
 
     def test_getters_pages(self):
-        gp = getPages(self.fakes)
+        gp = getPages(self.fakes, self.MAX_RUN, self.RATE_LIMIT)
         self.assertTrue(len(gp.book), 1)
 
     def test_getters_data(self):
-        gp = getPages(self.fakes)
+        gp = getPages(self.fakes, self.MAX_RUN, self.RATE_LIMIT)
          # test fails because reactor is not running
         self.assertFalse(len(gp.data), 0)
         
     def test_pageCallback(self):
-        gp = getPages(self.fakes)
+        gp = getPages(self.fakes, self.MAX_RUN, self.RATE_LIMIT)
         self.assertTrue(gp.pageCallback(result='testingOneTwo',
                                         key='test'), 'testingOneTwo')
 
@@ -44,6 +49,13 @@ class TestPagesForMissingValues(unittest.TestCase):
     def setUp(self):
         self.urls = {'google':"https://www.google.com/",
                      'test': "testingOneTwo"}
+        
+        # Maximum number or requests deferred
+        self.MAX_RUN = 20
+
+        # This many seconds will expire between requests sent
+        self.RATE_LIMIT = 0
+
 
     def test_page_ping(self):
         """ Need internet connectivity for these tests """
@@ -55,7 +67,7 @@ class TestPagesForMissingValues(unittest.TestCase):
         
     def test_correct_list(self):
         """ Is False value appended correctly ? """
-        gp = getPages(self.urls)
+        gp = getPages(self.urls, self.MAX_RUN, self.RATE_LIMIT)
         gp.start()
 
         if not reactor.running:

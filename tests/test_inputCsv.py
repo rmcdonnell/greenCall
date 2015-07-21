@@ -1,4 +1,4 @@
-""" Tests for greencall/cleancsv/inputCsv.py """
+""" Tests for greencall/csvclean/inputCsv.py """
 
 from twisted.trial import unittest
 

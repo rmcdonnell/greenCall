@@ -50,7 +50,8 @@ def runConversion(jsonpath, secretKey):
 
         gcs = GoogleCustomSearch(version = '1',
                 filtah = '1',
-                cx = '003891126258438650518:fcb7zxrqavu',
+                #cx = '003891126258438650518:fcb7zxrqavu',
+                cx = '003891126258438650518:vevgdf0rorg',
                 lr = 'lang_en',
                 exactTerms = 'asset',
                 q= obs[key],
